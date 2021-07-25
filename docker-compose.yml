@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+    sftpgo:
+        container_name: sftpgo
+        image: drakkan/sftpgo
+        ports:
+            - "8081:8080"
+            - "2022:2022"
+            - "2121:2121"
+        environment:
+            - "SFTPGO_FTPD__BINDINGS__0__PORT=2121"
+            - "SFTPGO_FTPD__BINDINGS__0__FORCE_PASSIVE_IP=127.0.0.1"
+            - "SFTPGO_FTPD__PASSIVE_PORT_RANGE__START=50000"
+            - "SFTPGO_FTPD__PASSIVE_PORT_RANGE__END=50100"
+        volumes:
+            - /appdata/sftpgo/data:/srv/sftpgo/data
+            - /appdata/sftpgo/backups:/srv/sftpgo/backups
+            - /appdata/sftpgo/lib:/var/lib/sftpgo
+            - /apps/winarosweb/source:/apps/winarosweb/source
+
+networks:
+    default:
+        name: proxy-network
